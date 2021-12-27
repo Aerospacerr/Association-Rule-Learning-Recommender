@@ -11,7 +11,8 @@ Important note: derive the decision rules from customers from 2010-2011 Germany
 
 ## Data Set Information:
 Name: Online Retail II
-Link: https://archive.ics.uci.edu/ml/machine-learning-databases/00502/
+Link: https://archive.ics.uci.edu/ml/machine-learning-databases/00502/ 
+You can download it from the link, it is bigger than 25MB, therefore couldn't upload here.
 
 A real online retail transaction data set of two years.
 This dataset includes the sales of a UK-based online store between 01/12/2009 and 09/12/2011.
