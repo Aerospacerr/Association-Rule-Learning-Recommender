@@ -1,12 +1,8 @@
 import pandas as pd
-pd.set_option('display.max_columns', None)
-# pd.set_option('display.max_rows', None)
-pd.set_option('display.width', 500)
-# çıktının tek bir satırda olmasını sağlar.
-pd.set_option('display.expand_frame_repr', False)
 from mlxtend.frequent_patterns import apriori, association_rules
 
-##### Görev 1 #####
+##### Part 1 #####
+#Database setup
 df_ = pd.read_excel("/content/online_retail_II.xlsx", sheet_name="Year 2010-2011")
 df = df_.copy()
 df.info()
@@ -37,9 +33,8 @@ def retail_data_prep(dataframe):
 df = retail_data_prep(df)
 
 
-##### Görev 2 #####
-
-# Birliktelik Kurallarının Çıkarılması
+##### Part 2#####
+# Association rules
 def create_rules(dataframe, id=True, country="Germany"):
     dataframe = dataframe[dataframe['Country'] == country]
     dataframe = create_invoice_product_df(dataframe, id)
@@ -55,32 +50,29 @@ def create_invoice_product_df(dataframe, id=False):
         return dataframe.groupby(['Invoice', 'Description'])['Quantity'].sum().unstack().fillna(0). \
             applymap(lambda x: 1 if x > 0 else 0)
 
-#almanyaya göre yapalım
+#Let's do it for Germany
 df_ger = df[df['Country'] == "Germany"]
 rules_ger = create_rules(df_ger)
 rules_ger.sort_values("lift", ascending=False).head(50)
 
-# ARL Veri Yapısını Hazırlama (Invoice-Product Matrix)
+#Preparing the ARL Data Structure (Invoice-Product Matrix)
 ger_inv_pro_df = create_invoice_product_df(df_ger, id=True)
 ger_inv_pro_df.head()
 
 
-#####Görev 3 #####
-
+##### Part 3 #####
+#ID check for stocks
 def check_id(dataframe, stock_code):
     product_name = dataframe[dataframe["StockCode"] == stock_code][["Description"]].values[0].tolist()
     print(product_name)
 
-
+#We randomly picked those users for example. It can be changed
 print(check_id(df_ger, 21987))
 print(check_id(df_ger, 23235))
 print(check_id(df_ger, 22747))
 
-
-
-##### Görev 4-5 #####
-
-#Sepetteki kullanıcılar için ürün önerisi yapalım
+##### Part 4 #####
+#Let's make a product recommendation for users
 def arl_recommender(rules_df, product_id, rec_count=1):
 
     sorted_rules = rules_df.sort_values("lift", ascending=False)
@@ -102,13 +94,14 @@ def list_to_int(lists):
   an_integer = int(a_string)
   return an_integer
 
-
+#Here is 1. user
 rec_1= arl_recommender(rules_ger, 21987, 1)
 print(check_id(df_ger, list_to_int(rec_1)))
 
-
+#Here is 2. user
 rec_2= arl_recommender(rules_ger, 23235, 1)
 print(check_id(df_ger, list_to_int(rec_2)))
 
+#Here is 3. user
 rec_3= arl_recommender(rules_ger, 22747, 1)
 print(check_id(df_ger, list_to_int(rec_3)))
