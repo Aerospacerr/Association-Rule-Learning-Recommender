@@ -28,7 +28,7 @@ Hello to all, this is my first github experience :) Hope you enjoy and benefit f
 
 
 ## General info
-We have given a set of transactions, we try to aim find rules that will predict the occurrence of an item, based on the occurrences of other items in the transaction. We use apriori algorithm and association rules which are support, lift and confidence.
+We have given a set of transactions, we try to aim find rules that will predict the occurrence of an item, based on the occurrences of other items in the transaction. In short, this is a daily situation like when we buy a laptop from any shopping site, the site instantly recommends us a laptop bag. We use apriori algorithm and association rules which are support, lift and confidence.
 
 ## Dataset info
 Name: Online Retail II  
